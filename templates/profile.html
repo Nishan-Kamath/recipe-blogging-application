@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to external CSS file -->
+    <style>
+        /* CSS for profile page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            overflow: hidden;
+            background-color: #007bff; /* Navbar background color */
+            position: fixed; /* Fix the navbar at the top */
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        /* Links inside the navbar */
+        .navbar a {
+            float: left; /* Float the links to the left */
+            display: block; /* Make the links block-level elements */
+            color: #fff; /* Text color */
+            text-align: center; /* Center-align text */
+            padding: 14px 20px; /* Padding around text */
+            text-decoration: none; /* Remove default underline */
+        }
+
+        /* Change color on hover */
+        .navbar a:hover {
+            background-color: #0056b3; /* Darker background color on hover */
+        }
+
+        /* Center-align the navbar links */
+        .navbar a:not(:last-child) {
+            border-right: 1px solid #fff; /* Add right border between links */
+        }
+
+        /* Float the user circle to the right */
+        .user-circle {
+            float: right;
+            margin-top: 10px; /* Adjust vertical alignment */
+            margin-right: auto;
+            margin-left: auto;
+            display: flex; /* Add margin from right */
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #9fedff; /* Circle background color */
+            color: #007bff; /* Text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        /* Content container */
+        .content {
+            padding-top: 60px; /* Add padding to content to avoid overlapping with navbar */
+        }
+
+        /* Add space between sections */
+        .divider {
+            margin-bottom: 30px;
+        }
+
+        /* Rest of your CSS styles */
+        /* ... */
+
+        /* Styles for post recipe section */
+        .post-recipe {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center; /* Center align post recipe section */
+            margin: 0 auto; /* Center align the post recipe section */
+            max-width: 800px; /* Limit the width for better readability */
+        }
+
+        .post-recipe h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .post-recipe label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left; /* Left align labels */
+        }
+
+        .post-recipe input[type="text"],
+        .post-recipe select,
+        .post-recipe textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .post-recipe textarea {
+            white-space: pre-wrap; /* Preserve line breaks and spaces */
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        .post-recipe input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .post-recipe input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styles for posted recipes section */
+        .recipes {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 0 auto; /* Center align the recipes section */
+            max-width: 800px; /* Limit the width for better readability */
+        }
+
+        .recipe-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .recipe-card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px; /* Add space after recipe name */
+        }
+
+        .recipe-card p {
+            margin: 5px 0; /* Reduce margin between recipe details */
+            font-size: 16px;
+            border-bottom: 1px solid #ddd; /* Add separator line */
+            padding-bottom: 10px; /* Add space between separator line and next information */
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="content">
+        <h1>User Profile</h1>
+        <div class="circle">
+            {{ user[1][0] }} <!-- Display the first character of the username -->
+        </div>
+        <div class="user-info">
+            <p>{{ user[1] }}</p> <!-- Assuming username is at index 1 in the user tuple -->
+            <p>{{ user[2] }}</p> <!-- Assuming bio is at index 3 in the user tuple -->
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="recipes">
+        <h2 style="text-align: center;">Posted Recipes</h2>
+        {% for recipe in recipes %}
+        <div class="recipe-card">
+            <h3>{{ recipe[1] }}</h3> <!-- Recipe name, assuming it's at index 1 in the recipe tuple -->
+            <p><strong>Category:</strong> {{ recipe[2] }}</p> <!-- Recipe category, assuming it's at index 2 in the recipe tuple -->
+            <p><strong>Ingredients:</strong><br>{{ recipe[3] }}</p> <!-- Recipe ingredients, assuming it's at index 3 in the recipe tuple -->
+            <p><strong>Steps:</strong><br>{{ recipe[4] }}</p> <!-- Recipe steps, assuming it's at index 4 in the recipe tuple -->
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="post-recipe">
+        <h2>Post a Recipe</h2>
+        <form action="{{ url_for('post_recipe') }}" method="post">
+            <label for="recipe_name">Name of the Recipe:</label><br>
+            <input type="text" id="recipe_name" name="recipe_name" required><br>
+
+            <label for="category">Category:</label><br>
+            <select id="category" name="category">
+                <option value="lunch">Lunch</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="dessert">Dessert</option>
+                <option value="salad">Salad</option>
+                <option value="dosa">Dosa</option>
+            </select><br>
+
+            <label for="ingredients">Ingredients Required:</label><br>
+            <textarea id="ingredients" name="ingredients" rows="4" cols="50" required></textarea><br>
+
+            <label for="steps">Steps to Prepare:</label><br>
+            <textarea id="steps" name="steps" rows="4" cols="50" required></textarea><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</body>
+</html>
