@@ -1,3 +1,1 @@
-# recipe-blogging-application
-hello World
-# recipe-blogging-application
+#Application built using flask,sqlite3 ,html and css in a simpler way
